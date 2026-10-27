@@ -1,5 +1,5 @@
 /* MUSIKKU: simpan tampilan aplikasi agar bisa dibuka tanpa internet */
-const C = "musikku-v2";
+const C = "musikku-v3";
 const SHELL = ["./", "./index.html", "./manifest.json", "./icon-180.png", "./icon-192.png", "./icon-512.png"];
 self.addEventListener("install", e => { e.waitUntil(caches.open(C).then(c => c.addAll(SHELL))); self.skipWaiting(); });
 self.addEventListener("activate", e => {
@@ -13,7 +13,7 @@ self.addEventListener("fetch", e => {
       .catch(() => caches.match(req, { ignoreSearch: true }).then(r => r || caches.match("./index.html"))));
     return;
   }
-  if (u.host === "fonts.googleapis.com" || u.host === "fonts.gstatic.com") {
+  if (u.host === "fonts.googleapis.com" || u.host === "fonts.gstatic.com" || (u.host === "www.gstatic.com" && u.pathname.startsWith("/firebasejs/"))) {
     e.respondWith(caches.match(req).then(r => r || fetch(req).then(res => { const cp = res.clone(); caches.open(C).then(c => c.put(req, cp)); return res; })));
   }
 });
