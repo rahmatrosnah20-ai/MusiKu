@@ -1,5 +1,5 @@
 /* MUSIKKU: simpan tampilan aplikasi agar bisa dibuka tanpa internet */
-const C = "musikku-v1";
+const C = "musikku-v2";
 const SHELL = ["./", "./index.html", "./manifest.json", "./icon-180.png", "./icon-192.png", "./icon-512.png"];
 self.addEventListener("install", e => { e.waitUntil(caches.open(C).then(c => c.addAll(SHELL))); self.skipWaiting(); });
 self.addEventListener("activate", e => {
